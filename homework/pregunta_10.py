@@ -5,6 +5,27 @@ solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+import glob
+
+
+def read_data(input_folder):
+    data = []
+    files = glob.glob(f"{input_folder}*")
+    
+    for file in files:
+        with open(file, "r", encoding="utf-8") as f:
+            for line in f:
+                data.append(line.strip().split("\t"))
+            
+    return data
+                    
+def wordcount_mapper(or_data):
+    data = []
+    for line in or_data:
+        data.append((line[0], len(line[3].split(",")), len(line[4].split(","))))
+        
+    return data
+
 
 def pregunta_10():
     """
@@ -20,3 +41,5 @@ def pregunta_10():
 
 
     """
+    data = read_data("files/input/")
+    return wordcount_mapper(data)
